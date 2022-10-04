@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback, useMemo } from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const [count, setCount] = useState(0)
 
+  const decrementCount = useCallback(() => {
+    setCount(count - 1)
+  }, [count])
+
+  const incrementCount = useCallback(() => {
+    setCount(count + 1)
+  }, [count])
+
+  /*function decrementCount() {
+    setCount(prevCount => prevCount - 1)
+  };
+
+  function incrementCount() {
+    setCount(prevCount => prevCount + 1)
+  };*/
+
+  const sum = useMemo(() => {
+    if (count === 0) { return "impossible" } else {
+      return count % 2 === 0 ? "even" : "odd"
+    }
+  }, [count])
+
+  return (
+    <>
+      <button onClick={decrementCount}>-</button>
+      <span>{count}</span>
+      <button onClick={incrementCount}>+</button>
+      <span>{sum}</span>
+    </>
+  )
+};
 export default App;
